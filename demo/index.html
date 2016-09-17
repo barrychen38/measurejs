@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Measurejs</title>
+	<link rel="stylesheet" href="css/measure.css">
+</head>
+<body>
+	
+	<div class="container">
+		<img src="img/iPhone5.jpg" alt="iPhone5">
+	</div>
+	
+	<script type="text/javascript" src="../test/measure.js"></script>
+	<script type="text/javascript">
+		
+		var iPhone = new Measure({
+			// target element
+			target: '.container',
+
+			// have wechat navbar
+			isNavbar: true,
+
+			// setup phone size
+			// iPhone 5 screen width is 640, iPhone 6 screen width is 750
+			size: 750,
+
+			// specify the unit you want to measure
+			// default unit
+			unit: 'px'
+
+		});
+			
+		iPhone.measure();
+		
+	</script>
+	
+</body>
+</html>
