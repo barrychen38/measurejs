@@ -58,7 +58,7 @@
 | :------: | :------: | :------------: | :-------: |
 |  target  | `String` | `'.container'` |  `目标容器`   |
 |   size   | `Number` |     `640`      |  `设计稿尺寸`  |
-| isNavbar | `Boolen` |     `true`     |  `是否有微信`  |
+| isNavbar | `Boolen` |     `true`     |  `是否有微信导航栏`  |
 |   unit   | `String` |    `'rem'`     | `指定测量的单位` |
 
 现在我们可以在页面中这么写：
