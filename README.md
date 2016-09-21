@@ -73,14 +73,14 @@ var iPhone = new Measure({
 
 	// setup phone size
 	// iPhone 5 screen width is 640, iPhone 6 screen width is 750
-	size: 750,
+	size: 640,
 
 	// specify the unit you want to measure
 	// default unit
 	unit: 'px'
 
 });
-			
+
 iPhone.measure();
 ```
 
