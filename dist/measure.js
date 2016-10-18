@@ -22,7 +22,7 @@
 		this._radius = 2;
 		this._left = 10;
 		this._top = 10;
-		this._color = '#FF5555';
+		this._color = '#F00';
 		
 		this._isNavbar ? this._navBarHeight = 128 : this._navBarHeight = 0;
 		
@@ -310,8 +310,11 @@
 			ctx.clearRect(0, 0, s._width, s._height);
 			ctx.drawImage(s._image, 0, 0);
 			ctx.beginPath();
-			ctx.arc(x, y, s._radius, 0, 2 * Math.PI);
-			ctx.fill();
+			ctx.moveTo(0, y);
+			ctx.lineTo(s._width, y);
+			ctx.moveTo(x, 0);
+			ctx.lineTo(x, s._height);
+			ctx.stroke();
 			ctx.restore();
 			
 			return {
@@ -333,7 +336,8 @@
 		s._image.onload = function() {
 			ctx.drawImage(s._image, 0, 0);
 		};
-		ctx.fillStyle = s._color;
+		ctx.strokeStyle = s._color;
+		ctx.lineWidth = 1;
 		
 		// measure
 		s._canvas.addEventListener('touchstart', function(event) {
@@ -362,7 +366,11 @@
 			
 			if (x >= 0 && y >= s._navBarHeight) {
 				
-				ctx.arc(x, y, s._radius, 0, 2 * Math.PI);
+				
+				ctx.moveTo(0, y);
+				ctx.lineTo(s._width, y);
+				ctx.moveTo(x, 0);
+				ctx.lineTo(x, s._height);
 				
 				top.innerHTML = dataY + s._unit;
 				
@@ -380,7 +388,7 @@
 			
 			data.style.opacity = 1;
 			
-			ctx.fill();
+			ctx.stroke();
 			
 			console.info(data.innerText);
 			
