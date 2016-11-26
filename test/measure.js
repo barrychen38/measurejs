@@ -1,5 +1,5 @@
 /*
- * measure.js v1.0.0
+ * measure.js v1.0.4
  * 
  * https://github.com/Chen38/measurejs
  * 
@@ -8,7 +8,7 @@
  * enjoy it
  */
 
-(function() {
+!function() {
 
 	var root = this;
 	
@@ -162,7 +162,7 @@
 	
 	p.setStyle = function(obj, data) {
 		obj.style.transform       =
-		obj.style.webkitTransform = 'translate('+ data.x + 'px,' + data.y + 'px)';
+		obj.style.webkitTransform = 'translate3d('+ data.x + 'px,' + data.y + 'px, 0)';
 	};
 	
 	p.keyControl = function(ctx, x, y) {
@@ -280,7 +280,7 @@
 				top.innerHTML = 0 + s._unit;
 				
 				data.style.transform       =
-				data.style.webkitTransform = 'translate(' + controlAdjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px)';
+				data.style.webkitTransform = 'translate3d(' + controlAdjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
 			}
 			
 		};
@@ -383,7 +383,7 @@
 				ctx.arc(x, s._navBarHeight, s._radius, 0, 2 * Math.PI);
 				
 				data.style.transform       =
-				data.style.webkitTransform = 'translate(' + adjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px)';
+				data.style.webkitTransform = 'translate3d(' + adjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
 			}
 			
 			data.style.opacity = 1;
@@ -395,7 +395,15 @@
 		}, false);
 		
 	};
-
-	root.Measure = Measure;
 	
-})();
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		define(function() { // AMD for requirejs
+			return Measure;
+		});
+	} else if (typeof module !== 'undefined' && module.exports) {
+		module.exports = Measure; // CMD for seajs
+	} else {
+		root.Measure = Measure; // Normal
+	}
+
+}();
