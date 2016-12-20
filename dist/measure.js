@@ -5,13 +5,10 @@
  * 
  * convenient to measure unit like rem or px
  * 
- * enjoy it
  */
 
-!function() {
+!function(root) {
 
-	var root = this;
-	
 	var Measure = function(argus) {
 		
 		this._obj = document.querySelector(argus.target);
@@ -406,4 +403,4 @@
 		root.Measure = Measure; // Normal
 	}
 
-}();
+}(this);
