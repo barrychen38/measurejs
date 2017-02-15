@@ -47,7 +47,7 @@
 之后引入我们的插件：
 
 ```html
-<script type="text/javascript" src="dist/remeasure.min.js"></script>
+<script type="text/javascript" src="dist/measure.min.js"></script>
 ```
 
 ####  3. 初始化到完成
