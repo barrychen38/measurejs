@@ -7,34 +7,40 @@
  * 
  */
 
-!function(root) {
+! function(root, factory) {
+	
+	// cmd ? cmd : amd ? amd : root || window
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(): typeof define === 'function' && define.amd ? define(factory) : (root.Measure = factory());
+	
+}(this, (function() {
 
 	var Measure = function(argus) {
-		
-		this._obj = document.querySelector(argus.target);
-		this._width = argus.size;
-		this._way = argus.way;
-		this._isNavbar = argus.isNavbar;
-		this._unit = argus.unit;
-		this._radius = 2;
-		this._left = 10;
-		this._top = 10;
-		this._color = '#F00';
-		
-		this._isNavbar ? this._navBarHeight = 128 : this._navBarHeight = 0;
-		
-		switch (this._unit) {
-			case 'px':
-				this._isHundred = 1;
-				break;
-			case 'rem':
-				this._isHundred = 100;
-				break;
-			default:
-				break;
-		}
 
-	}, p = Measure.prototype;
+			this._obj = document.querySelector(argus.target);
+			this._width = argus.size;
+			this._way = argus.way;
+			this._isNavbar = argus.isNavbar;
+			this._unit = argus.unit;
+			this._radius = 2;
+			this._left = 10;
+			this._top = 10;
+			this._color = '#F00';
+
+			this._isNavbar ? this._navBarHeight = 128 : this._navBarHeight = 0;
+
+			switch (this._unit) {
+				case 'px':
+					this._isHundred = 1;
+					break;
+				case 'rem':
+					this._isHundred = 100;
+					break;
+				default:
+					break;
+			}
+
+		},
+		p = Measure.prototype;
 
 	var measrueShowData = document.createElement('div');
 	measrueShowData.classList.add('data');
@@ -45,19 +51,19 @@
 	var data = document.querySelector('.data'),
 		top = document.querySelector('.top'),
 		left = document.querySelector('.left');
-	
+
 	var dataOffsetWidth = data.offsetWidth,
 		dataOffsetHeight = data.offsetHeight;
-	
-	// window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-	
+
+	var RAF = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
 	p.whichPhone = function() {
-		
+
 		var w = this._width;
-		
+
 		var viewport = document.createElement('meta');
 		viewport.name = 'viewport';
-		
+
 		switch (w) {
 			case 640:
 				viewport.content = 'width=' + w + ',target-densitydpi=device-dpi,maximum-scale=1,user-scalable=no';
@@ -72,16 +78,16 @@
 			default:
 				break;
 		}
-		
+
 		document.getElementsByTagName('head')[0].appendChild(viewport);
-		
+
 	};
-	
+
 	p.createCanvas = function() {
 
 		// confirm which phone to set canvas size
 		this.whichPhone();
-		
+
 		var o = this._obj;
 		this._canvas = document.createElement('canvas');
 		this._canvas.width = this._width;
@@ -90,48 +96,48 @@
 		this._canvas.style.height = this._height + 'px';
 		this._canvas.id = 'measure';
 		o.appendChild(this._canvas);
-		
+
 		// save image dom then return
 		this._image = o.childNodes[1];
 		o.childNodes[1].style.display = 'none';
-		
+
 	};
-	
+
 	p.checkPosition = function(sx, sy, px, py) {
-		
+
 		var endX = this._width - (2 * this._left + dataOffsetWidth),
 			endY = this._height - (2 * this._top + dataOffsetHeight);
-			
+
 		var adjustPosX,
 			adjustPosY;
-		
+
 		// touch end the right but not the bottom
 		if (sx > endX && sy <= endY) {
-			
+
 			adjustPosX = sx - this._left - dataOffsetWidth;
 			adjustPosY = py;
-			
+
 		}
 		// touch end the bottom but not the right
 		if (sy > endY && sx <= endX) {
-			
+
 			adjustPosX = px;
 			adjustPosY = sy - this._top - dataOffsetHeight;
-			
+
 		}
 		// touch both close to the right and bottom
 		if (sx > endX && sy > endY) {
-			
+
 			adjustPosX = sx - this._left - dataOffsetWidth;
 			adjustPosY = sy - this._top - dataOffsetHeight;
-			
+
 		}
 		// touch both not close to the right and bottom
 		if (sx <= endX && sy <= endY) {
-			
+
 			adjustPosX = px;
 			adjustPosY = py;
-			
+
 		}
 		// control close to the right
 		if (adjustPosX + this._left + dataOffsetWidth >= this._width) {
@@ -149,21 +155,21 @@
 		if (adjustPosY <= this._navBarHeight + this._top) {
 			adjustPosY = this._navBarHeight + this._top;
 		}
-		
+
 		return {
 			x: adjustPosX,
 			y: adjustPosY
 		};
-		
+
 	};
-	
+
 	p.setStyle = function(obj, data) {
-		obj.style.transform       =
-		obj.style.webkitTransform = 'translate3d('+ data.x + 'px,' + data.y + 'px, 0)';
+		obj.style.transform =
+			obj.style.webkitTransform = 'translate3d(' + data.x + 'px,' + data.y + 'px, 0)';
 	};
-	
+
 	p.keyControl = function(ctx, x, y) {
-		
+
 		/**
 		 * keyCode
 		 * 
@@ -177,7 +183,7 @@
 		 * @s      => 83
 		 * @d      => 68
 		 */
-		
+
 		var s = this;
 
 		var stepMove = 1,
@@ -185,7 +191,7 @@
 			maxHeight = s._height,
 			minWidth = 0,
 			minHeight = 128;
-		
+
 		var controlX = x,
 			controlY = y;
 
@@ -193,10 +199,10 @@
 			controlPosY = controlY + s._top,
 			controlDataX = Math.round(controlX) / s._isHundred,
 			controlDataY = Math.round(controlY - s._navBarHeight) / s._isHundred;
-		
+
 		var controlAdjustDataPos,
 			isReapeating = false;
-		
+
 		var control = {
 			moveLeft: function() {
 				controlX -= stepMove;
@@ -235,12 +241,12 @@
 				controlDataY = Math.round(controlAdjustDataPos.y - s._navBarHeight) / s._isHundred;
 			}
 		};
-		
+
 		document.body.onkeydown = function(event) {
-			
+
 			var keyCode = event.keyCode;
 			// console.log(keyCode);
-			
+
 			switch (keyCode) {
 				case 37:
 				case 65:
@@ -261,35 +267,35 @@
 				default:
 					break;
 			}
-			
+
 			var controlAdjustPos = s.checkPosition(controlX, controlY, controlPosX, controlPosY);
-			
+
 			left.innerHTML = controlDataX + s._unit;
-			
+
 			if (x >= 0 && y >= s._navBarHeight) {
-				
+
 				top.innerHTML = controlDataY + s._unit;
-				
+
 				s.setStyle(data, controlAdjustPos);
-				
+
 			} else {
-				
+
 				top.innerHTML = 0 + s._unit;
-				
-				data.style.transform       =
-				data.style.webkitTransform = 'translate3d(' + controlAdjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
+
+				data.style.transform =
+					data.style.webkitTransform = 'translate3d(' + controlAdjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
 			}
-			
+
 		};
-		
+
 		document.body.onkeyup = function() {
 			if (!isReapeating) {
 				console.info(data.innerText);
 			}
 		};
-		
+
 		function checkPosAndDraw(x, y) {
-			
+
 			if (x >= maxWidth) {
 				x = maxWidth;
 			}
@@ -302,7 +308,7 @@
 			if (y >= maxHeight) {
 				y = maxHeight;
 			}
-			
+
 			ctx.save();
 			ctx.clearRect(0, 0, s._width, s._height);
 			ctx.drawImage(s._image, 0, 0);
@@ -314,19 +320,21 @@
 			ctx.stroke();
 			ctx.restore();
 			
+			// RAF(checkPosAndDraw(x, y));
+
 			return {
 				x: x,
 				y: y
 			};
-			
+
 		}
-		
+
 	};
-	
+
 	p.measure = function() {
-		
+
 		var s = this;
-		
+
 		// draw image
 		s.createCanvas();
 		var ctx = s._canvas.getContext('2d');
@@ -335,72 +343,64 @@
 		};
 		ctx.strokeStyle = s._color;
 		ctx.lineWidth = 1;
-		
+
 		// measure
 		s._canvas.addEventListener('touchstart', function(event) {
 			// console.log(event);
-			
+
 			var x = event.touches[0].pageX,
 				y = event.touches[0].pageY;
 			// console.log('origin position: x:' + x + ' y:' + y);
-			
+
 			s.keyControl(ctx, x, y);
-			
+
 			ctx.clearRect(0, 0, s._width, s._height);
 			ctx.drawImage(s._image, 0, 0);
 			ctx.beginPath();
-			
+
 			var dataX = Math.round(x) / s._isHundred,
 				dataY = Math.round(y - s._navBarHeight) / s._isHundred;
 			// console.log('dataX: ' + dataX + ' dataY: ' + dataY);
-			
+
 			left.innerHTML = dataX + s._unit;
-			
+
 			var posX = s._left + x,
 				posY = s._top + y;
-			
+
 			var adjustPos = s.checkPosition(x, y, posX, posY);
-			
+
 			if (x >= 0 && y >= s._navBarHeight) {
-				
-				
+
+
 				ctx.moveTo(0, y);
 				ctx.lineTo(s._width, y);
 				ctx.moveTo(x, 0);
 				ctx.lineTo(x, s._height);
-				
+
 				top.innerHTML = dataY + s._unit;
-				
+
 				s.setStyle(data, adjustPos);
-				
+
 			} else {
-				
+
 				top.innerHTML = 0 + s._unit;
-				
+
 				ctx.arc(x, s._navBarHeight, s._radius, 0, 2 * Math.PI);
-				
-				data.style.transform       =
-				data.style.webkitTransform = 'translate3d(' + adjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
+
+				data.style.transform =
+					data.style.webkitTransform = 'translate3d(' + adjustPos.x + 'px,' + (s._navBarHeight + s._top) + 'px, 0)';
 			}
-			
+
 			data.style.opacity = 1;
-			
+
 			ctx.stroke();
-			
+
 			console.info(data.innerText);
-			
+
 		}, false);
-		
+
 	};
 	
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		define(function() { // AMD for requirejs
-			return Measure;
-		});
-	} else if (typeof module !== 'undefined' && module.exports) {
-		module.exports = Measure; // CMD for seajs
-	} else {
-		root.Measure = Measure; // Normal
-	}
+	return Measure;
 
-}(this);
+}));
