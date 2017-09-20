@@ -1,10 +1,8 @@
 ## measure.js
 
-代码中只针对了主流的 *iPhone 5* 和 *iPhone 6* 尺寸。
+代码中只针对了主流的 *iPhone 5* 和 *iPhone 6* 尺寸，当然也包括其他相同尺寸手机的型号，后面会有写。
 
-在公司闲的无聊，所以想来写一个测量单位的插件，写完之后突然发现这个插件其实也是挺无聊的，估计也就对我自己有用一点吧，有需要的童鞋也是可以来试玩一下的。
-
-插件可以用于测量 *rem* 和 *px* 两个不同单位。
+目前可以用于测量 *rem* 和 *px* 两个单位，以后会加入其他单位的测量。
 
 ### *rem* 单位长度测量
 
@@ -12,91 +10,100 @@
 
 如果我们需要用 *rem* 来进行自适应的话，一般需要引用 [*rem.js*](assets/scripts/rem.js) ，写成 *rem* 单位的时候需要除以 `100`，也就是说：
 
-> 438px => 4.38rem
+> 538px => 5.38rem
 
 所以全部以我使用的为准吧，感觉有点强盗行为。
 
-这时候出现小数点的单位在浏览器里需要定位调试的话会比较麻烦，尽管浏览器里可以进行整数的和一位小数点的单位快捷键控制，貌似不能进行第三位小数点的单位控制，所以不断控制调整单位总比一次到位来的麻烦，这个插件很方便。
+这时候出现小数点的单位在浏览器里需要定位调试的话会比较麻烦，尽管浏览器里可以进行整数的和一位小数点的单位快捷键控制，貌似不能进行第三位小数点的单位控制，所以不断控制调整单位总比一次到位来的麻烦。
 
 ### *px* 单位长度测量
 
 这个不具体细说了，测量和 *rem* 是一样的，只是显示的单位和数值不一样。
 
-### 用法
+### 使用
 
 #### 1. 得到设计稿尺寸
 
 一般设计稿出的 *iPhone 5* 尺寸为 `640 * 1136`，而 *iPhone 6* 尺寸为 `750 * 1334`，真正的尺寸还需要去掉微信自带的一个导航栏刚好为 `128px`。如果你测量的不是微信的设计稿，就不需要去掉导航栏。
 
-#### 2. 基本结构
-
-引入一下我的小小 `CSS` 文件：
+#### 2. 基本用法
 
 ```html
-<link rel="stylesheet" href="dist/measure.css">
-```
-
-根据设计稿的大小在浏览器里模拟对应的手机型号，直接将整图放入：
-
-```html
-<div class="container">
-	<img src="img/iPhone5.jpg" alt="iPhone5">
-</div>
-```
-
-之后引入我们的插件：
-
-```html
+<div id="measure"></div>
 <script type="text/javascript" src="dist/measure.min.js"></script>
+<script type="text/javascript">
+  var iPhone = new Measure({
+    // Target element
+    target: 'measure',
+
+    // Image path
+    // Should be relative to this html
+    src: 'img/iPhone6.jpg',
+
+    // Have WeChat navbar
+    haveNavbar: true,
+
+    // Setup iPhone's edition
+    edition: '6s',
+
+    // Specify the unit you want to measure
+    // Default is `px`
+    unit: 'px',
+
+    // Enable key control
+    // Default is `false`
+    enableKeyControl: true,
+
+    // Cross lines' color
+    // Default is '#DD4B39'
+    lineColor: '#DD4B39'
+  });
+
+  iPhone.measure();
+</script>
 ```
 
-####  3. 初始化到完成
+####  3. 参数和事件
 
-参数说明：
+必需参数：
 
-|    参数    |    类型    |      举🌰       |    说明     |
-| :------: | :------: | :------------: | :-------: |
-|  target  | `String` | `'.container'` |  `目标容器`   |
-|   size   | `Number` |     `640`      |  `设计稿尺寸`  |
-| isNavbar | `Boolen` |     `true`     |  `是否有微信导航栏`  |
-|   unit   | `String` |    `'rem'`     | `指定测量的单位` |
+- `target: string`: 容器，接受属性 `id`
 
-现在我们可以在页面中这么写：
+- `src: string`: 需要测量的图片，**相对 html 的相对路径**
+
+- `haveNavbar: boolean`: 是否有微信导航栏
+
+- `edition: string`: 手机版本的型号
+
+> 这边提供了7种手机尺寸，分别是：5，5s，SE，6，6s，7，8，其实 640 的写 5，750 的写 6 就好了
+
+可选参数：
+
+- `unit: string`: 需要测量的单位，默认值 `px`，可选 `rem`
+
+- `enableKeyControl: boolean`: 是否需要进行键盘控制，提高准确性，默认 `false`
+
+> 控制键可以是 ⬆️ ⬇️ ⬆️ ➡️，也可以是 `w`， `a`， `s`， `d`
+
+- `lineColor: string`: 交叉十字线的颜色，可以根据图片颜色设置突出点的颜色，便于测量，默认 `#DD4B39`
+
+事件
+
+- `measure: void`: 事件绑定在 events 对象上，方便管理，返回测量值的 left 和 top 值
 
 ```javascript
-var iPhone = new Measure({
-	// target element
-	target: '.container',
-
-	// have wechat navbar
-	isNavbar: true,
-
-	// setup phone size
-	// iPhone 5 screen width is 640, iPhone 6 screen width is 750
-	size: 640,
-
-	// specify the unit you want to measure
-	// default unit
-	unit: 'px'
-
+iPhone.events.on('measure', function(left, top) {
+  console.log('left: ' + left + iPhone.unit + ';\n' + 'top: ' + top + iPhone.unit + ';');
 });
-
-iPhone.measure();
 ```
+
+####  4. 浏览器操作
 
 在浏览器里打开开发者工具，并选择对应的手机型号：
 
 ![iPhone](assets/iPhone.png)
 
-在浏览器里我们可以鼠标点击操作：
-
-![tap](assets/tap.gif)
-
-也可以键盘操作，控制键可以是 ⬆️ ⬇️ ⬆️ ➡️，也可以是 `w`， `a`， `s`， `d`，主要是增加测量的准确性：
-
-![key](assets/key.gif)
-
-最后我们在 `console` 里面复制我们测量的结果。
+在浏览器里我们可以鼠标点击操作，也可以键盘操作，，主要是增加测量的准确性。
 
 ### 写在结尾的话
 
@@ -104,4 +111,4 @@ iPhone.measure();
 
 可能在工作中用 *rem* 的时候对于位置的瞄准能节省一点点时间吧。
 
-我又在想如果设计稿有很多趴，我的步骤也多，这样做可能还是有点累的吧 😂
+我又在想如果设计稿有很多趴，我的步骤也多，这样做可能还是有点累的吧 😂，所以仅供参考，可以一起学习。

@@ -1,16 +1,7 @@
 {
-  "name": "measure",
-  "version": "1.0.4",
+  "name": "measurejs",
+  "version": "1.1.4",
   "author": "Barry Chen",
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "load-grunt-tasks": "^3.5.0",
-    "time-grunt": "^1.4.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Chen38/measurejs.git"
@@ -20,5 +11,29 @@
     "px",
     "measure"
   ],
-  "license": "MIT"
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build",
+    "deploy": "node deploy.js"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chen38/measurejs/issues"
+  },
+  "homepage": "https://github.com/Chen38/measurejs#readme",
+  "main": "dist/measure.js",
+  "devDependencies": {
+    "browser-sync": "^2.18.2",
+    "browserify": "^14.3.0",
+    "gh-pages": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-typescript": "^3.2.2",
+    "gulp-uglify": "^2.0.0",
+    "pump": "^1.0.1",
+    "typescript": "^2.5.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
 }
