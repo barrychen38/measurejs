@@ -3,37 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Measurejs</title>
-	<link rel="stylesheet" href="css/measure.css">
 </head>
 <body>
-	
-	<div class="container">
-		<img src="img/iPhone5.jpg" alt="iPhone5">
-	</div>
-	
-	<script type="text/javascript" src="../test/measure.js"></script>
+
+	<div id="measure"></div>
+
+	<script type="text/javascript" src="../tmp/measure.js"></script>
 	<script type="text/javascript">
-		
+
 		var iPhone = new Measure({
-			// target element
-			target: '.container',
+			// Target element
+			target: 'measure',
 
-			// have wechat navbar
-			isNavbar: true,
+			// Image path
+			// Should be relative to this html
+			src: 'img/iPhone6.jpg',
 
-			// setup phone size
-			// iPhone 5 screen width is 640, iPhone 6 screen width is 750
-			size: 640,
+			// Have WeChat navbar
+			haveNavbar: true,
 
-			// specify the unit you want to measure
-			// default unit
-			unit: 'px'
+			// Setup iPhone's edition
+			edition: '6s',
 
+			// Specify the unit you want to measure
+			// Default is `px`
+			unit: 'px',
+
+			// Enable key control
+			// Default is `false`
+			enableKeyControl: true,
+
+			// Cross lines' color
+			// Default is '#DD4B39'
+			lineColor: '#DD4B39'
 		});
-			
+
 		iPhone.measure();
-		
+
+		iPhone.events.on('measure', function(left, top) {
+			console.log('left: ' + left + iPhone.unit + ';\n' + 'top: ' + top + iPhone.unit + ';');
+		});
+
 	</script>
-	
+
 </body>
 </html>
