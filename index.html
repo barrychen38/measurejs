@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Measurejs</title>
+</head>
+<body>
+
+	<div id="measure"></div>
+
+	<script type="text/javascript" src="./js/measure.min.js"></script>
+	<script type="text/javascript">
+
+		var iPhone = new Measure({
+			// Target element
+			target: 'measure',
+
+			// Image path
+			// Should be relative to this html
+			src: 'img/iPhone6.jpg',
+
+			// Have WeChat navbar
+			haveNavbar: true,
+
+			// Setup iPhone's edition
+			edition: '6s',
+
+			// Specify the unit you want to measure
+			// Default is `px`
+			unit: 'px',
+
+			// Enable key control
+			// Default is `false`
+			enableKeyControl: true,
+
+			// Cross lines' color
+			// Default is '#DD4B39'
+			lineColor: '#DD4B39'
+		});
+
+		iPhone.measure();
+
+		iPhone.events.on('measure', function(left, top) {
+			console.log('left: ' + left + iPhone.unit + ';\n' + 'top: ' + top + iPhone.unit + ';');
+		});
+
+	</script>
+
+</body>
+</html>
