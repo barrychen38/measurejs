@@ -103,7 +103,7 @@ iPhone.events.on('measure', function(left, top) {
 
 ![iPhone](assets/iPhone.png)
 
-在浏览器里我们可以鼠标点击操作，也可以键盘操作，，主要是增加测量的准确性。
+在浏览器里我们可以鼠标点击操作，也可以键盘操作，主要是增加测量的准确性。
 
 ### 写在结尾的话
 

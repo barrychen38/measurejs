@@ -95,14 +95,14 @@ module.exports = function() {
 			if (self.enableKeyControl) {
 				_addEvent(document.body, 'keydown', _keyPressDraw);
 				_addEvent(document.body, 'keyup', function() {
-					self.events.trigger('measure', _pointPosition.x / _multiple, (_pointPosition.y - _navbarHeight) / _multiple);
+					self.events.trigger('measure', Math.floor(_pointPosition.x / _multiple), Math.floor((_pointPosition.y - _navbarHeight) / _multiple));
 				});
 			}
 
 			// Add touch event to measure
 			_addEvent(self.canvas, 'touchstart', _touchDraw);
 			_addEvent(self.canvas, 'touchend', function() {
-				self.events.trigger('measure', _pointPosition.x / _multiple, (_pointPosition.y - _navbarHeight) / _multiple);
+				self.events.trigger('measure', Math.floor(_pointPosition.x / _multiple), Math.floor((_pointPosition.y - _navbarHeight) / _multiple));
 			});
 
 		}
@@ -277,8 +277,8 @@ module.exports = function() {
 			_cxt.font = '26px Menlo, Consolas';
 			_cxt.fillStyle = '#6C76E1';
 			_cxt.textBaseline = 'top';
-			_cxt.fillText('left: ' + lineLeft / _multiple + _unit + ';', rectLeft + 10, rectTop + 12);
-			_cxt.fillText('top:  ' + (lineTop - _navbarHeight) / _multiple + _unit + ';', rectLeft + 10, rectTop + 48);
+			_cxt.fillText('left: ' + Math.floor(lineLeft / _multiple) + _unit + ';', rectLeft + 10, rectTop + 12);
+			_cxt.fillText('top:  ' + Math.floor((lineTop - _navbarHeight) / _multiple) + _unit + ';', rectLeft + 10, rectTop + 48);
 		}
 
 		function _addEvent(el, type, fn) {
