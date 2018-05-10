@@ -1,6 +1,6 @@
 {
-  "name": "measurejs",
-  "version": "1.1.4",
+  "name": "Measure.js",
+  "version": "1.2.0",
   "author": "Barry Chen",
   "repository": {
     "type": "git",
@@ -12,9 +12,11 @@
     "measure"
   ],
   "scripts": {
-    "dev": "gulp dev",
-    "build": "gulp build",
-    "deploy": "node deploy.js"
+    "start": "gulp dev",
+    "build": "rimraf -- dist && gulp build && yarn run version",
+    "deploy": "yarn run gh && node build/deploy.js",
+    "version": "node build/version.js",
+    "gh": "gulp ghPages"
   },
   "license": "MIT",
   "bugs": {
@@ -24,16 +26,12 @@
   "main": "dist/measure.js",
   "devDependencies": {
     "browser-sync": "^2.18.2",
-    "browserify": "^14.3.0",
     "gh-pages": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-rename": "^1.2.2",
-    "gulp-typescript": "^3.2.2",
     "gulp-uglify": "^2.0.0",
     "pump": "^1.0.1",
-    "typescript": "^2.5.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "rimraf": "^2.6.2"
   }
 }

@@ -1,4 +1,3 @@
-/*! Measure.js v1.2.0 | (c) Barry Chen */
 (function(root, factory) {
 
   // CMD ? CMD : AMD ? AMD : root || window

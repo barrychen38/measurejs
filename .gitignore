@@ -1,12 +1,17 @@
+# editor
+.idea/
+.vscode/
+
 # npm
 node_modules/
-npm-debug.*
-
-# tmp
-tmp/
 
 # gh-pages
 gh-pages/
 
 # system
+_MACOSX/
 *.DS_Store
+._*
+
+# log
+*.log

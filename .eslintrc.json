@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true
+        "commonjs": true,
+        "ES6": true
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -148,7 +149,7 @@
         "no-native-reassign": "error",
         "no-negated-condition": "off",
         "no-negated-in-lhs": "error",
-        "no-nested-ternary": "error",
+        "no-nested-ternary": "off",
         "no-new": "error",
         "no-new-func": "error",
         "no-new-object": "error",
@@ -177,7 +178,7 @@
         "no-script-url": "error",
         "no-self-compare": "error",
         "no-sequences": "error",
-        "no-shadow": "error",
+        "no-shadow": "warn",
         "no-shadow-restricted-names": "error",
         "no-spaced-func": "error",
         "no-sync": "error",
@@ -192,7 +193,7 @@
         "no-underscore-dangle": "off",
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
-        "no-unused-expressions": "error",
+        "no-unused-expressions": "off",
         "no-unused-vars": "warn",
         "no-use-before-define": "off",
         "no-useless-call": "error",
@@ -279,7 +280,7 @@
         ],
         "valid-jsdoc": "off",
         "vars-on-top": "off",
-        "wrap-iife": "error",
+        "wrap-iife": "off",
         "wrap-regex": "error",
         "yield-star-spacing": "error",
         "yoda": "error"

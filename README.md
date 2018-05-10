@@ -30,14 +30,17 @@
 
 ```html
 <div id="measure"></div>
-<script type="text/javascript" src="dist/measure.min.js"></script>
+<script type="text/javascript" src="path/to/measure.js"></script>
 <script type="text/javascript">
+
   var iPhone = new Measure({
+
     // Target element
+    // Should be the id of this element
     target: 'measure',
 
     // Image path
-    // Should be relative to this html
+    // Should be relative to this html or root path
     src: 'img/iPhone6.jpg',
 
     // Have WeChat navbar
@@ -60,6 +63,7 @@
   });
 
   iPhone.measure();
+
 </script>
 ```
 
@@ -89,11 +93,11 @@
 
 事件
 
-- `measure: void`: 事件绑定在 events 对象上，方便管理，返回测量值的 left 和 top 值
+- `measure`: 事件绑定在 events 对象上，方便管理，返回测量值的 left 和 top 值
 
 ```javascript
-iPhone.events.on('measure', function(left, top) {
-  console.log('left: ' + left + iPhone.unit + ';\n' + 'top: ' + top + iPhone.unit + ';');
+iPhone.on('measure', function(left, top) {
+  console.log('left: ' + left + iPhone.unit + ' / ' + 'top: ' + top + iPhone.unit + ';');
 });
 ```
 
