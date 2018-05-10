@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Measurejs</title>
+  <meta charset="UTF-8">
+  <title>Measurejs</title>
 </head>
 <body>
 
-	<div id="measure"></div>
+  <div id="measure"></div>
 
-	<script type="text/javascript" src="./measure.min.js"></script>
-	<script type="text/javascript">
+  <script type="text/javascript" src="measure.js"></script>
+  <script type="text/javascript">
 
-		var iPhone = new Measure({
-			// Target element
-			target: 'measure',
+    var iPhone = new Measure({
 
-			// Image path
-			// Should be relative to this html
-			src: 'iPhone6.jpg',
+      // Target element
+      // Should be the id of this element
+      target: 'measure',
 
-			// Have WeChat navbar
-			haveNavbar: true,
+      // Image path
+      // Should be relative to this html or root path
+      src: 'img/iPhone6.jpg',
 
-			// Setup iPhone's edition
-			edition: '6s',
+      // Have WeChat navbar
+      haveNavbar: true,
 
-			// Specify the unit you want to measure
-			// Default is `px`
-			unit: 'px',
+      // Setup iPhone's edition
+      edition: '6s',
 
-			// Enable key control
-			// Default is `false`
-			enableKeyControl: true,
+      // Specify the unit you want to measure
+      // Default is `px`
+      unit: 'px',
 
-			// Cross lines' color
-			// Default is '#DD4B39'
-			lineColor: '#DD4B39'
-		});
+      // Enable key control
+      // Default is `false`
+      enableKeyControl: true,
 
-		iPhone.measure();
+      // Cross lines' color
+      // Default is '#DD4B39'
+      lineColor: '#DD4B39'
+    });
 
-		iPhone.events.on('measure', function(left, top) {
-			console.log('left: ' + left + iPhone.unit + ';\n' + 'top: ' + top + iPhone.unit + ';');
-		});
+    console.log(iPhone);
 
-	</script>
+    iPhone.measure();
+
+    iPhone.on('measure', function(left, top) {
+      console.log('left: ' + left + iPhone.unit + ' / ' + 'top: ' + top + iPhone.unit + ';');
+    });
+
+  </script>
 
 </body>
 </html>
