@@ -8,7 +8,7 @@
 
   <div id="measure"></div>
 
-  <script type="text/javascript" src="measure.js"></script>
+  <script type="text/javascript" src="measure.min.js"></script>
   <script type="text/javascript">
 
     var iPhone = new Measure({
@@ -19,7 +19,7 @@
 
       // Image path
       // Should be relative to this html or root path
-      src: 'img/iPhone6.jpg',
+      src: 'iPhone6.jpg',
 
       // Have WeChat navbar
       haveNavbar: true,
@@ -39,8 +39,6 @@
       // Default is '#DD4B39'
       lineColor: '#DD4B39'
     });
-
-    console.log(iPhone);
 
     iPhone.measure();
 
