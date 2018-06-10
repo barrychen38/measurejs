@@ -121,7 +121,7 @@
   }
 
   // Inherit EventEmitter class
-  Measure.prototype = Object.create(EventEmitter.prototype);
+  Measure.prototype = new EventEmitter();
   Measure.prototype.constructor = Measure;
 
   Measure.prototype.measure = (function() {
