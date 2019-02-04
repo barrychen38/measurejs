@@ -188,14 +188,22 @@
       if (self.enableKeyControl) {
         _addEvent(document.body, 'keydown', _keyPressDraw);
         _addEvent(document.body, 'keyup', function() {
-          self.trigger('measure', Math.floor(pointPosition.x / multiple), Math.floor((pointPosition.y - navbarHeight) / multiple));
+          self.trigger(
+            'measure',
+            Math.floor(pointPosition.x / multiple),
+            Math.floor((pointPosition.y - navbarHeight) / multiple)
+          );
         });
       }
 
       // Add touch event to measure
       _addEvent(self.canvas, 'touchstart', _touchDraw);
       _addEvent(self.canvas, 'touchend', function() {
-        self.trigger('measure', Math.floor(pointPosition.x / multiple), Math.floor((pointPosition.y - navbarHeight) / multiple));
+        self.trigger(
+          'measure',
+          Math.floor(pointPosition.x / multiple),
+          Math.floor((pointPosition.y - navbarHeight) / multiple)
+        );
       });
     }
 
@@ -273,15 +281,15 @@
      * Should draw the cross lines and data rectangle both
      * Enabled by option `enableKeyControl`
      *
-     * key.top    = 38
-     * key.left   = 37
-     * key.bottom = 40
-     * key.right  = 39
+     * // - key.top    = 38
+     * // - key.left   = 37
+     * // - key.bottom = 40
+     * // - key.right  = 39
      *
-     * key.w      = 87
-     * key.a      = 65
-     * key.s      = 83
-     * key.d      = 68
+     * // - key.w      = 87
+     * // - key.a      = 65
+     * // - key.s      = 83
+     * // - key.d      = 68
      */
     function _keyPressDraw(event) {
       var keyCode = event.keyCode;
@@ -399,6 +407,7 @@
         var _height = this.height;
 
         ctx.drawImage(image, 0, 0);
+        this = null
 
         if (_width !== resolution.width && _height !== resolution.height) {
           throw new Error('You\'d better use the same image as your iPhone resolution.');
